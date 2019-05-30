@@ -74,18 +74,6 @@ namespace PDFmerge
 
                 string targetDir = info.Directory.FullName; 
 
-                //string[] allDirs = new string[listBox1.Items.Count];
-                //string targetDir = string.Empty;
-                //int i = 0;
-                //foreach (string file in files)
-                //{
-                //    FileInfo info = new FileInfo(file);
-                //    allDirs[i] = info.Directory.FullName;
-                //    i++;
-                //}
-
-                //targetDir = allDirs[0];
-
                 string prompt = "What do you want to name the merged PDF file? \r\nThe merged PDF file will be saved in: \r\n" + targetDir;
 
                 string newFileName = VB.Interaction.InputBox(prompt, "PDF File Name", "Merged PDF " + DateTime.Now.Month + "-" + DateTime.Now.Day + "-" + DateTime.Now.Year + " " + DateTime.Now.Hour + ";" + DateTime.Now.Minute + ".pdf");
@@ -98,8 +86,8 @@ namespace PDFmerge
                     string fullPath = Path.Combine(targetDir, newFileName);
 
                     bool success = MergePDFs(files, fullPath);
-
-                    Application.DoEvents();
+                    
+                    Application.DoEvents();                    
 
                     if (success)
                     {

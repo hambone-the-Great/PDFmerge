@@ -70,21 +70,13 @@ namespace PDFmerge
 
                 IEnumerable<string> files = listBox1.Items.Cast<string>();
 
-                string[] allDirs = new string[listBox1.Items.Count];
-                string targetDir = string.Empty;
-                int i = 0;
-                foreach (string file in files)
-                {
-                    FileInfo info = new FileInfo(file);
-                    allDirs[i] = info.Directory.FullName;
-                    i++;
-                }
+                FileInfo info = new FileInfo(listBox1.Items[0].ToString());
 
-                targetDir = allDirs[0];
+                string targetDir = info.Directory.FullName; 
 
                 string prompt = "What do you want to name the merged PDF file? \r\nThe merged PDF file will be saved in: \r\n" + targetDir;
 
-                string newFileName = VB.Interaction.InputBox(prompt, "PDF File Name", "Merged_PDF_Doc_" + DateTime.Now.Month + "_" + DateTime.Now.Day + "_" + DateTime.Now.Year + "_" + DateTime.Now.Hour + "_" + DateTime.Now.Minute + ".pdf");
+                string newFileName = VB.Interaction.InputBox(prompt, "PDF File Name", "Merged PDF " + DateTime.Now.Month + "-" + DateTime.Now.Day + "-" + DateTime.Now.Year + " " + DateTime.Now.Hour + ";" + DateTime.Now.Minute + ".pdf");
 
 
                 if (!string.IsNullOrEmpty(newFileName))
@@ -94,8 +86,8 @@ namespace PDFmerge
                     string fullPath = Path.Combine(targetDir, newFileName);
 
                     bool success = MergePDFs(files, fullPath);
-
-                    Application.DoEvents();
+                    
+                    Application.DoEvents();                    
 
                     if (success)
                     {
@@ -116,7 +108,7 @@ namespace PDFmerge
             }
             else
             {
-                MessageBox.Show("A minimum of two (2) PDF files are needed to merge.");
+                MessageBox.Show("There must be at least two PDF files to merge.");
             }
         }
 
@@ -187,15 +179,25 @@ namespace PDFmerge
             {
                 int selected = listBox1.SelectedIndex;
 
-                if (listBox1.Items.Count > 0 && selected > -1)
+                
+                if (selected > -1)
                 {
+                    //Remove selected item from list
                     listBox1.Items.Remove(listBox1.Items[selected]);
-                    listBox1.SelectedIndex = selected > 0 ? selected - 1 : selected;
+
+                    //Check the number of items remaining. 
+                    if (listBox1.Items.Count > 0)
+                    {
+                        listBox1.SelectedIndex = selected > 0 ? selected - 1 : 0;
+                    }
+                    else
+                    {
+                        listBox1.SelectedIndex = -1;
+                        btnClear.Enabled = false; 
+                    }
+                    
                 }
-                else
-                {
-                    btnClear.Enabled = false;
-                }
+                
             }
             catch (Exception ex)
             {

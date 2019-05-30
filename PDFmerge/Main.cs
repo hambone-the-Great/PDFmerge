@@ -64,50 +64,59 @@ namespace PDFmerge
 
         private void btnMerge_Click(object sender, EventArgs e)
         {
-            IEnumerable<string> files = listBox1.Items.Cast<string>();
 
-            string[] allDirs = new string[listBox1.Items.Count]; 
-            string targetDir = string.Empty;
-            int i = 0; 
-            foreach (string file in files)
+            if (listBox1.Items.Count > 1)
             {
-                FileInfo info = new FileInfo(file);
-                allDirs[i] = info.Directory.FullName;
-                i++;
-            }
 
-            targetDir = allDirs[0];
+                IEnumerable<string> files = listBox1.Items.Cast<string>();
 
-            string prompt = "What do you want to name the merged PDF file? \r\nThe merged PDF file will be saved in: \r\n" + targetDir;
-
-            string newFileName = VB.Interaction.InputBox(prompt, "PDF File Name", "Merged_PDF_Doc_" + DateTime.Now.Month + "_" + DateTime.Now.Day + "_" + DateTime.Now.Year + "_" + DateTime.Now.Hour + "_" + DateTime.Now.Minute + ".pdf");
-
-           
-            if (!string.IsNullOrEmpty(newFileName))
-            {
-                newFileName = newFileName.Contains(".pdf") ? newFileName : newFileName + ".pdf";
-
-                string fullPath = Path.Combine(targetDir, newFileName);
-
-                bool success = MergePDFs(files, fullPath);
-
-                Application.DoEvents();
-
-                if (success)
+                string[] allDirs = new string[listBox1.Items.Count];
+                string targetDir = string.Empty;
+                int i = 0;
+                foreach (string file in files)
                 {
-                    //Process.Start(@"" + targetDir);
-                    Process.Start(@"" + fullPath);
-                    listBox1.Items.Clear();
+                    FileInfo info = new FileInfo(file);
+                    allDirs[i] = info.Directory.FullName;
+                    i++;
+                }
+
+                targetDir = allDirs[0];
+
+                string prompt = "What do you want to name the merged PDF file? \r\nThe merged PDF file will be saved in: \r\n" + targetDir;
+
+                string newFileName = VB.Interaction.InputBox(prompt, "PDF File Name", "Merged_PDF_Doc_" + DateTime.Now.Month + "_" + DateTime.Now.Day + "_" + DateTime.Now.Year + "_" + DateTime.Now.Hour + "_" + DateTime.Now.Minute + ".pdf");
+
+
+                if (!string.IsNullOrEmpty(newFileName))
+                {
+                    newFileName = newFileName.Contains(".pdf") ? newFileName : newFileName + ".pdf";
+
+                    string fullPath = Path.Combine(targetDir, newFileName);
+
+                    bool success = MergePDFs(files, fullPath);
+
+                    Application.DoEvents();
+
+                    if (success)
+                    {
+                        //Process.Start(@"" + targetDir);
+                        Process.Start(@"" + fullPath);
+                        listBox1.Items.Clear();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Something went wrong. Close the program and try again.");
+                    }
+
                 }
                 else
                 {
-                    MessageBox.Show("Something went wrong. Close the program and try again.");
+                    MessageBox.Show("Merge failed. No file name provided.");
                 }
-
             }
             else
             {
-                MessageBox.Show("Merge failed. No file name provided.");
+                MessageBox.Show("A minimum of two (2) PDF files are needed to merge.");
             }
         }
 

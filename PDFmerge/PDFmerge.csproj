@@ -55,7 +55,7 @@
     <SignManifests>true</SignManifests>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>PDFmerge-logo-large.ico</ApplicationIcon>
+    <ApplicationIcon>images\pdf-merge-icon.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
     <ManifestCertificateThumbprint>C876A2D1464FCEA52C0F6EA0B46ADD20BCB3020C</ManifestCertificateThumbprint>
@@ -115,7 +115,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <None Include="resources\pdf-merge-logo.xcf" />
+    <None Include="images\pdf-merge-logo.xcf" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -133,10 +133,10 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="PDFmerge-logo-large.ico" />
-    <Content Include="resources\PDFmerge-logo-large.ico" />
-    <Content Include="resources\PDFmerge-logo.ico" />
-    <Content Include="resources\PDFmerge-logo.png" />
+    <Content Include="images\pdf-merge-icon.ico" />
+    <Content Include="images\PDFmerge-logo-large.ico" />
+    <Content Include="images\PDFmerge-logo.ico" />
+    <Content Include="images\PDFmerge-logo.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

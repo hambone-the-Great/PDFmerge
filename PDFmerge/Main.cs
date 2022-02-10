@@ -68,7 +68,7 @@ namespace PDFmerge
             if (listBox1.Items.Count > 1)
             {
 
-                IEnumerable<string> files = listBox1.Items.Cast<string>();
+                string[] files = listBox1.Items.Cast<string>().ToArray(); 
 
                 FileInfo info = new FileInfo(listBox1.Items[0].ToString());
 
@@ -85,20 +85,20 @@ namespace PDFmerge
 
                     string fullPath = Path.Combine(targetDir, newFileName);
 
-                    bool success = MergePDFs(files, fullPath);
+                    CombineMultiplePDFs(files, fullPath);
                     
                     Application.DoEvents();                    
 
-                    if (success)
-                    {
+                    //if (success)
+                    //{
                         //Process.Start(@"" + targetDir);
                         Process.Start(@"" + fullPath);
                         listBox1.Items.Clear();
-                    }
-                    else
-                    {
-                        MessageBox.Show("Something went wrong. Close the program and try again.");
-                    }
+                    //}
+                    //else
+                    //{
+                    //    MessageBox.Show("Something went wrong. Close the program and try again.");
+                    //}
 
                 }
                 else
@@ -136,42 +136,87 @@ namespace PDFmerge
         }
 
 
-        public static bool MergePDFs(IEnumerable<string> fileNames, string targetPdf)
+
+
+        public static void CombineMultiplePDFs(string[] fileNames, string outFile)
         {
-            bool merged = true;
-            using (FileStream stream = new FileStream(targetPdf, FileMode.Create))
+            // step 1: creation of a document-object
+            Document document = new Document();
+            //create newFileStream object which will be disposed at the end
+            using (FileStream newFileStream = new FileStream(outFile, FileMode.Create))
             {
-                Document document = new Document();
-                PdfCopy pdf = new PdfCopy(document, stream);
-                PdfReader reader = null;
-                try
+                // step 2: we create a writer that listens to the document
+                PdfCopy writer = new PdfCopy(document, newFileStream);
+
+                // step 3: we open the document
+                document.Open();
+
+                foreach (string fileName in fileNames)
                 {
-                    document.Open();
-                    foreach (string file in fileNames)
+                    // we create a reader for a certain document
+                    PdfReader reader = new PdfReader(fileName);
+                    reader.ConsolidateNamedDestinations();
+
+                    // step 4: we add content
+                    for (int i = 1; i <= reader.NumberOfPages; i++)
                     {
-                        reader = new PdfReader(file);
-                        pdf.AddDocument(reader);
-                        reader.Close();
+                        PdfImportedPage page = writer.GetImportedPage(reader, i);
+                        writer.AddPage(page);
                     }
+
+                    //PRAcroForm form = reader.AcroForm;
+                    //if (form != null)
+                    //{
+                    //    writer.CopyAcroForm(reader);
+                    //}
+
+                    reader.Close();
                 }
-                catch (Exception)
-                {
-                    merged = false;
-                    if (reader != null)
-                    {
-                        reader.Close();
-                    }
-                }
-                finally
-                {
-                    if (document != null)
-                    {
-                        document.Close();
-                    }
-                }
-            }
-            return merged;
+
+                // step 5: we close the document and writer
+                writer.Close();
+                document.Close();
+            }//disposes the newFileStream object
         }
+
+
+
+        //public static bool MergePDFs(IEnumerable<string> fileNames, string targetPdf)
+        //{
+        //    bool merged = true;
+        //    using (FileStream stream = new FileStream(targetPdf, FileMode.Create))
+        //    {                
+        //        Document document = new Document();
+        //        PdfCopy pdf = new PdfCopy(document, stream);
+        //        PdfReader reader = null;
+        //        try
+        //        {
+        //            document.Open();
+        //            foreach (string file in fileNames)
+        //            {
+        //                reader = new PdfReader(file);
+        //                pdf.AddDocument(reader);
+        //                reader.Close();
+        //            }
+        //        }
+        //        catch (Exception)
+        //        {
+        //            merged = false;
+        //            if (reader != null)
+        //            {
+        //                reader.Close();
+        //            }
+        //        }
+        //        finally
+        //        {
+        //            if (document != null)
+        //            {
+        //                document.Close();
+        //            }
+        //        }
+        //    }
+        //    return merged;
+        //}
 
         private void btnClear_Click(object sender, EventArgs e)
         {

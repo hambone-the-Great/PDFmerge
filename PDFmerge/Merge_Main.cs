@@ -17,14 +17,24 @@ using System.Diagnostics;
 
 namespace PDFmerge
 {
-    public partial class Main : Form
+    public partial class Merge_Main : Form
     {
-        public Main()
+
+        public bool ShowAfterMerge { get; set; } = true; 
+
+        public Merge_Main(string[] files = null)
         {
             InitializeComponent();
             this.AllowDrop = true;
             this.DragEnter += new DragEventHandler(MainForm_DragEnter);
             this.DragDrop += new DragEventHandler(MainForm_DragDrop);
+
+            if (files != null)
+            {
+                LoadFiles(files);
+            }
+            
+
         }
 
 
@@ -37,6 +47,9 @@ namespace PDFmerge
         private async void Main_Load(object sender, EventArgs e)
         {
             await InitializeAsync();
+
+            webview.NavigateToString("<h1 style='font-family:Open Sans;'>Drag and drop files to merge.</h1>");
+
         }
 
         private void MainForm_DragEnter(object sender, DragEventArgs e)
@@ -47,6 +60,11 @@ namespace PDFmerge
         private void MainForm_DragDrop(object sender, DragEventArgs e)
         {
             string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+            LoadFiles(files);
+        }
+
+        private void LoadFiles(string[] files)
+        {
             foreach (string file in files)
             {
 
@@ -94,8 +112,10 @@ namespace PDFmerge
 
                     CombineMultiplePDFs(files, fullPath);                                      
 
-                    Process.Start(@"" + fullPath);
+                    if (ShowAfterMerge) Process.Start(@"" + fullPath);
+                    
                     listBox1.Items.Clear();
+                    this.DialogResult = DialogResult.OK;
 
                 }
                 else

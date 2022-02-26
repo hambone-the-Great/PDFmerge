@@ -92,20 +92,10 @@ namespace PDFmerge
 
                     string fullPath = Path.Combine(targetDir, newFileName);
 
-                    CombineMultiplePDFs(files, fullPath);
-                    
-                    Application.DoEvents();                    
+                    CombineMultiplePDFs(files, fullPath);                                      
 
-                    //if (success)
-                    //{
-                        //Process.Start(@"" + targetDir);
-                        Process.Start(@"" + fullPath);
-                        listBox1.Items.Clear();
-                    //}
-                    //else
-                    //{
-                    //    MessageBox.Show("Something went wrong. Close the program and try again.");
-                    //}
+                    Process.Start(@"" + fullPath);
+                    listBox1.Items.Clear();
 
                 }
                 else
@@ -147,7 +137,6 @@ namespace PDFmerge
 
         public static void CombineMultiplePDFs(string[] fileNames, string outFile)
         {
-
             if (fileNames.Length <= 0) return;
             if (outFile == null) return;
 
@@ -166,9 +155,8 @@ namespace PDFmerge
             }
 
             outDoc.Close();
-
-            Process.Start(outFile);
-
+            
+            Application.DoEvents();
         }
 
         private void btnClear_Click(object sender, EventArgs e)

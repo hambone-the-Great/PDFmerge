@@ -8,9 +8,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using iTextSharp;
-using iTextSharp.text;
-using iTextSharp.text.pdf;
+using PdfSharp;
+using PdfSharp.Pdf;
+using PdfSharp.Pdf.IO;
 using VB = Microsoft.VisualBasic;
 using System.Diagnostics;
 

@@ -27,9 +27,16 @@ namespace PDFmerge
             this.DragDrop += new DragEventHandler(MainForm_DragDrop);
         }
 
-        private void Main_Load(object sender, EventArgs e)
+
+
+        private async Task InitializeAsync()
         {
-            
+            await webview.EnsureCoreWebView2Async(null);            
+        }
+
+        private async void Main_Load(object sender, EventArgs e)
+        {
+            await InitializeAsync();
         }
 
         private void MainForm_DragEnter(object sender, DragEventArgs e)
@@ -140,83 +147,29 @@ namespace PDFmerge
 
         public static void CombineMultiplePDFs(string[] fileNames, string outFile)
         {
-            // step 1: creation of a document-object
-            Document document = new Document();
-            //create newFileStream object which will be disposed at the end
-            using (FileStream newFileStream = new FileStream(outFile, FileMode.Create))
+
+            if (fileNames.Length <= 0) return;
+            if (outFile == null) return;
+
+            PdfDocument outDoc = new PdfDocument(outFile);
+
+            foreach (string file in fileNames)
             {
-                // step 2: we create a writer that listens to the document
-                PdfCopy writer = new PdfCopy(document, newFileStream);
+                PdfDocument doc = PdfReader.Open(file, PdfDocumentOpenMode.Import); 
 
-                // step 3: we open the document
-                document.Open();
-
-                foreach (string fileName in fileNames)
+                for (int i = 0; i < doc.Pages.Count; i++)
                 {
-                    // we create a reader for a certain document
-                    PdfReader reader = new PdfReader(fileName);
-                    reader.ConsolidateNamedDestinations();
-
-                    // step 4: we add content
-                    for (int i = 1; i <= reader.NumberOfPages; i++)
-                    {
-                        PdfImportedPage page = writer.GetImportedPage(reader, i);
-                        writer.AddPage(page);
-                    }
-
-                    //PRAcroForm form = reader.AcroForm;
-                    //if (form != null)
-                    //{
-                    //    writer.CopyAcroForm(reader);
-                    //}
-
-                    reader.Close();
+                    outDoc.AddPage(doc.Pages[i]);
+                    doc.Close(); 
                 }
 
-                // step 5: we close the document and writer
-                writer.Close();
-                document.Close();
-            }//disposes the newFileStream object
+            }
+
+            outDoc.Close();
+
+            Process.Start(outFile);
+
         }
-
-
-
-        //public static bool MergePDFs(IEnumerable<string> fileNames, string targetPdf)
-        //{
-        //    bool merged = true;
-        //    using (FileStream stream = new FileStream(targetPdf, FileMode.Create))
-        //    {                
-        //        Document document = new Document();
-        //        PdfCopy pdf = new PdfCopy(document, stream);
-        //        PdfReader reader = null;
-        //        try
-        //        {
-        //            document.Open();
-        //            foreach (string file in fileNames)
-        //            {
-        //                reader = new PdfReader(file);
-        //                pdf.AddDocument(reader);
-        //                reader.Close();
-        //            }
-        //        }
-        //        catch (Exception)
-        //        {
-        //            merged = false;
-        //            if (reader != null)
-        //            {
-        //                reader.Close();
-        //            }
-        //        }
-        //        finally
-        //        {
-        //            if (document != null)
-        //            {
-        //                document.Close();
-        //            }
-        //        }
-        //    }
-        //    return merged;
-        //}
 
         private void btnClear_Click(object sender, EventArgs e)
         {
@@ -253,10 +206,35 @@ namespace PDFmerge
 
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
+
+            if (listBox1.SelectedIndex < 0) return; 
+
             if (listBox1.Items.Count > 0)
             {
+                string path = listBox1.SelectedItem.ToString();
+
                 btnClear.Enabled = true;
+
+                if (path != null && path != webview.Source.ToString())
+                {
+                    webview.Navigate(path);
+                }
+
             }
         }
     }
+
+    static class WebViewHelper
+    {
+
+        public static void Navigate(this Microsoft.Web.WebView2.WinForms.WebView2 webview, string path)
+        {
+            if (webview != null && webview.CoreWebView2 != null)
+            {
+                webview.CoreWebView2.Navigate(path);
+            }
+        }
+
+    }
+
 }

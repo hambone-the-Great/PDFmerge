@@ -37,7 +37,9 @@
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.btnClear = new System.Windows.Forms.Button();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.webview = new Microsoft.Web.WebView2.WinForms.WebView2();
             this.tableLayoutPanel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.webview)).BeginInit();
             this.SuspendLayout();
             // 
             // listBox1
@@ -131,6 +133,7 @@
             this.tableLayoutPanel1.Controls.Add(this.btnClear, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.btnDown, 1, 2);
             this.tableLayoutPanel1.Controls.Add(this.btnUp, 1, 1);
+            this.tableLayoutPanel1.Controls.Add(this.webview, 0, 4);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -142,6 +145,17 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 60F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(1083, 732);
             this.tableLayoutPanel1.TabIndex = 5;
+            // 
+            // webview
+            // 
+            this.webview.CreationProperties = null;
+            this.webview.DefaultBackgroundColor = System.Drawing.Color.White;
+            this.webview.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.webview.Location = new System.Drawing.Point(3, 295);
+            this.webview.Name = "webview";
+            this.webview.Size = new System.Drawing.Size(955, 434);
+            this.webview.TabIndex = 5;
+            this.webview.ZoomFactor = 1D;
             // 
             // Main
             // 
@@ -158,6 +172,7 @@
             this.Text = "PDF Merge";
             this.Load += new System.EventHandler(this.Main_Load);
             this.tableLayoutPanel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.webview)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -171,6 +186,7 @@
         private System.Windows.Forms.ToolTip toolTip1;
         private System.Windows.Forms.Button btnClear;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+        private Microsoft.Web.WebView2.WinForms.WebView2 webview;
     }
 }
 

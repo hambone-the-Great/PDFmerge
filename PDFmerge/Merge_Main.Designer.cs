@@ -48,7 +48,7 @@
             this.listBox1.Font = new System.Drawing.Font("Century Gothic", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.listBox1.FormattingEnabled = true;
             this.listBox1.HorizontalScrollbar = true;
-            this.listBox1.ItemHeight = 17;
+            this.listBox1.ItemHeight = 21;
             this.listBox1.Location = new System.Drawing.Point(3, 3);
             this.listBox1.Name = "listBox1";
             this.tableLayoutPanel1.SetRowSpan(this.listBox1, 4);
@@ -148,18 +148,19 @@
             // 
             // webview
             // 
+            this.tableLayoutPanel1.SetColumnSpan(this.webview, 2);
             this.webview.CreationProperties = null;
             this.webview.DefaultBackgroundColor = System.Drawing.Color.White;
             this.webview.Dock = System.Windows.Forms.DockStyle.Fill;
             this.webview.Location = new System.Drawing.Point(3, 295);
             this.webview.Name = "webview";
-            this.webview.Size = new System.Drawing.Size(955, 434);
+            this.webview.Size = new System.Drawing.Size(1077, 434);
             this.webview.TabIndex = 5;
             this.webview.ZoomFactor = 1D;
             // 
-            // Main
+            // Merge_Main
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 21F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 23F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1083, 732);
             this.Controls.Add(this.tableLayoutPanel1);
@@ -168,7 +169,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(4);
             this.MaximizeBox = false;
-            this.Name = "Main";
+            this.Name = "Merge_Main";
             this.Text = "PDF Merge";
             this.Load += new System.EventHandler(this.Main_Load);
             this.tableLayoutPanel1.ResumeLayout(false);

@@ -20,7 +20,9 @@ namespace PDFmerge
     public partial class Merge_Main : Form
     {
 
-        public bool ShowAfterMerge { get; set; } = true; 
+        public bool ShowAfterMerge { get; set; } = true;
+
+        private readonly string WelcomeHtmlPath = Path.Combine(MergeSettings.INSTALL_DIR, @"html\welcome.htm");
 
         public Merge_Main(string[] files = null)
         {
@@ -37,18 +39,20 @@ namespace PDFmerge
 
         }
 
-
-
-        private async Task InitializeAsync()
-        {
-            await webview.EnsureCoreWebView2Async(null);            
-        }
-
+        
         private async void Main_Load(object sender, EventArgs e)
         {
-            await InitializeAsync();
+            //await InitializeAsync();
 
-            webview.NavigateToString("<h1 style='font-family:Open Sans;'>Drag and drop files to merge.</h1>");
+            
+
+            //StreamReader reader = new StreamReader(File.OpenRead(welcomeHtmlPath));
+
+            //webview.NavigateToString(reader.ReadToEnd());
+
+            chrome.LoadUrl(WelcomeHtmlPath);
+
+            //reader.Close();
 
         }
 
@@ -97,11 +101,22 @@ namespace PDFmerge
 
                 FileInfo info = new FileInfo(listBox1.Items[0].ToString());
 
-                string targetDir = info.Directory.FullName; 
+                string targetDir = info.Directory.FullName;
 
-                string prompt = "What do you want to name the merged PDF file? \r\nThe merged PDF file will be saved in: \r\n" + targetDir;
+                SaveFileDialog saveDiag = new SaveFileDialog();
+                saveDiag.Filter = "PDF Files | *.pdf";
+                saveDiag.Title = "Save your merged PDF";
+                var result = saveDiag.ShowDialog();
+                
 
-                string newFileName = VB.Interaction.InputBox(prompt, "PDF File Name", "Merged PDF " + DateTime.Now.Month + "-" + DateTime.Now.Day + "-" + DateTime.Now.Year + " " + DateTime.Now.Hour + ";" + DateTime.Now.Minute + ".pdf");
+                if (result != DialogResult.OK) return;
+                if (saveDiag.FileName == string.Empty) return;
+
+                string newFileName = saveDiag.FileName;
+
+                //tring prompt = "What do you want to name the merged PDF file? \r\nThe merged PDF file will be saved in: \r\n" + targetDir;
+
+                //string newFileName = VB.Interaction.InputBox(prompt, "PDF File Name", "Merged PDF " + DateTime.Now.Month + "-" + DateTime.Now.Day + "-" + DateTime.Now.Year + " " + DateTime.Now.Hour + ";" + DateTime.Now.Minute + ".pdf");
 
 
                 if (!string.IsNullOrEmpty(newFileName))
@@ -115,6 +130,7 @@ namespace PDFmerge
                     if (ShowAfterMerge) Process.Start(@"" + fullPath);
                     
                     listBox1.Items.Clear();
+                    chrome.LoadUrl(WelcomeHtmlPath);
                     this.DialogResult = DialogResult.OK;
 
                 }
@@ -223,26 +239,27 @@ namespace PDFmerge
 
                 btnClear.Enabled = true;
 
-                if (path != null && path != webview.Source.ToString())
+                if (path != null && path != chrome.Address)
                 {
-                    webview.Navigate(path);
+                    //webview.Navigate(path);
+                    chrome.LoadUrl(path);
                 }
 
             }
         }
     }
 
-    static class WebViewHelper
-    {
+    //static class WebViewHelper
+    //{
 
-        public static void Navigate(this Microsoft.Web.WebView2.WinForms.WebView2 webview, string path)
-        {
-            if (webview != null && webview.CoreWebView2 != null)
-            {
-                webview.CoreWebView2.Navigate(path);
-            }
-        }
+    //    public static void Navigate(this Microsoft.Web.WebView2.WinForms.WebView2 webview, string path)
+    //    {
+    //        if (webview != null && webview.CoreWebView2 != null)
+    //        {
+    //            webview.CoreWebView2.Navigate(path);
+    //        }
+    //    }
 
-    }
+    //}
 
 }

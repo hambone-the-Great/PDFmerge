@@ -12,7 +12,7 @@ namespace PDFmerge
     {
 
         public static readonly string INSTALL_DIR = AppDomain.CurrentDomain.BaseDirectory;
-        public static readonly string APP_DATA_DIR = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"\PDFmerge"); 
+        //public static readonly string APP_DATA_DIR = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"\PDFmerge"); 
 
     }
 }

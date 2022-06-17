@@ -105,7 +105,7 @@ namespace PDFmerge
 
                 SaveFileDialog saveDiag = new SaveFileDialog();
                 saveDiag.Filter = "PDF Files | *.pdf";
-                saveDiag.Title = "Save your merged PDF";
+                saveDiag.Title = "Save your merged PDF";                
                 var result = saveDiag.ShowDialog();
                 
 
@@ -246,6 +246,25 @@ namespace PDFmerge
                 }
 
             }
+        }
+
+        private void openToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog diag = new OpenFileDialog();
+            diag.Filter = "PDF Files | *.pdf";
+            diag.Multiselect = true;
+            var result = diag.ShowDialog(); 
+
+            if (result == DialogResult.OK)
+            {
+                string[] files = diag.FileNames; 
+
+                foreach (string file in files)
+                {
+                    listBox1.Items.Add(file); 
+                }
+            }
+
         }
     }
 

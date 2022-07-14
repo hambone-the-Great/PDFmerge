@@ -178,12 +178,13 @@
             // webview
             // 
             this.webview.AllowExternalDrop = true;
+            this.tableLayoutPanel1.SetColumnSpan(this.webview, 2);
             this.webview.CreationProperties = null;
             this.webview.DefaultBackgroundColor = System.Drawing.Color.White;
             this.webview.Dock = System.Windows.Forms.DockStyle.Fill;
             this.webview.Location = new System.Drawing.Point(3, 287);
             this.webview.Name = "webview";
-            this.webview.Size = new System.Drawing.Size(698, 425);
+            this.webview.Size = new System.Drawing.Size(788, 425);
             this.webview.TabIndex = 5;
             this.webview.ZoomFactor = 1D;
             // 

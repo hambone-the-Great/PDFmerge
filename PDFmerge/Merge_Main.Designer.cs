@@ -36,8 +36,7 @@
             this.btnMerge = new System.Windows.Forms.Button();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.btnClear = new System.Windows.Forms.Button();
-            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.chrome = new CefSharp.WinForms.ChromiumWebBrowser();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();            
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -135,8 +134,7 @@
             this.tableLayoutPanel1.Controls.Add(this.btnMerge, 1, 3);
             this.tableLayoutPanel1.Controls.Add(this.btnClear, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.btnDown, 1, 2);
-            this.tableLayoutPanel1.Controls.Add(this.btnUp, 1, 1);
-            this.tableLayoutPanel1.Controls.Add(this.chrome, 0, 4);
+            this.tableLayoutPanel1.Controls.Add(this.btnUp, 1, 1);            
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 24);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -148,16 +146,6 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 60F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(794, 715);
             this.tableLayoutPanel1.TabIndex = 5;
-            // 
-            // chrome
-            // 
-            this.chrome.ActivateBrowserOnCreation = false;
-            this.tableLayoutPanel1.SetColumnSpan(this.chrome, 2);
-            this.chrome.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.chrome.Location = new System.Drawing.Point(3, 287);
-            this.chrome.Name = "chrome";
-            this.chrome.Size = new System.Drawing.Size(788, 425);
-            this.chrome.TabIndex = 5;
             // 
             // menuStrip1
             // 
@@ -215,8 +203,7 @@
         private System.Windows.Forms.Button btnMerge;
         private System.Windows.Forms.ToolTip toolTip1;
         private System.Windows.Forms.Button btnClear;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-        private CefSharp.WinForms.ChromiumWebBrowser chrome;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;        
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem openToolStripMenuItem;

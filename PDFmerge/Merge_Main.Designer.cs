@@ -36,12 +36,14 @@
             this.btnMerge = new System.Windows.Forms.Button();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.btnClear = new System.Windows.Forms.Button();
-            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();            
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.webview = new Microsoft.Web.WebView2.WinForms.WebView2();
             this.tableLayoutPanel1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.webview)).BeginInit();
             this.SuspendLayout();
             // 
             // listBox1
@@ -134,7 +136,8 @@
             this.tableLayoutPanel1.Controls.Add(this.btnMerge, 1, 3);
             this.tableLayoutPanel1.Controls.Add(this.btnClear, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.btnDown, 1, 2);
-            this.tableLayoutPanel1.Controls.Add(this.btnUp, 1, 1);            
+            this.tableLayoutPanel1.Controls.Add(this.btnUp, 1, 1);
+            this.tableLayoutPanel1.Controls.Add(this.webview, 0, 4);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 24);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -168,9 +171,21 @@
             // openToolStripMenuItem
             // 
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
             this.openToolStripMenuItem.Text = "Open";
             this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
+            // 
+            // webview
+            // 
+            this.webview.AllowExternalDrop = true;
+            this.webview.CreationProperties = null;
+            this.webview.DefaultBackgroundColor = System.Drawing.Color.White;
+            this.webview.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.webview.Location = new System.Drawing.Point(3, 287);
+            this.webview.Name = "webview";
+            this.webview.Size = new System.Drawing.Size(698, 425);
+            this.webview.TabIndex = 5;
+            this.webview.ZoomFactor = 1D;
             // 
             // Merge_Main
             // 
@@ -190,6 +205,7 @@
             this.tableLayoutPanel1.ResumeLayout(false);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.webview)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -207,6 +223,7 @@
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem openToolStripMenuItem;
+        private Microsoft.Web.WebView2.WinForms.WebView2 webview;
     }
 }
 

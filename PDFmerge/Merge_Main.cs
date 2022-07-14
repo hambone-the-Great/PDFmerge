@@ -44,13 +44,14 @@ namespace PDFmerge
         {
             //await InitializeAsync();
 
-            
+
 
             //StreamReader reader = new StreamReader(File.OpenRead(welcomeHtmlPath));
 
             //webview.NavigateToString(reader.ReadToEnd());
 
-            chrome.LoadUrl(WelcomeHtmlPath);
+            //chrome.LoadUrl(WelcomeHtmlPath);
+            webview.Source = new Uri(WelcomeHtmlPath); 
 
             //reader.Close();
 
@@ -130,7 +131,8 @@ namespace PDFmerge
                     if (ShowAfterMerge) Process.Start(@"" + fullPath);
                     
                     listBox1.Items.Clear();
-                    chrome.LoadUrl(WelcomeHtmlPath);
+                    //chrome.LoadUrl(WelcomeHtmlPath);
+                    webview.Source = new Uri(WelcomeHtmlPath); 
                     this.DialogResult = DialogResult.OK;
 
                 }
@@ -239,10 +241,11 @@ namespace PDFmerge
 
                 btnClear.Enabled = true;
 
-                if (path != null && path != chrome.Address)
+                if (path != null && path != webview.Source.ToString())
                 {
                     //webview.Navigate(path);
-                    chrome.LoadUrl(path);
+                    //chrome.LoadUrl(path);
+                    webview.Source = new Uri(path); 
                 }
 
             }

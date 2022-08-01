@@ -106,7 +106,8 @@ namespace PDFmerge
 
                 SaveFileDialog saveDiag = new SaveFileDialog();
                 saveDiag.Filter = "PDF Files | *.pdf";
-                saveDiag.Title = "Save your merged PDF";                
+                saveDiag.Title = "Save your merged PDF";
+                saveDiag.InitialDirectory = targetDir; 
                 var result = saveDiag.ShowDialog();
                 
 
@@ -114,10 +115,6 @@ namespace PDFmerge
                 if (saveDiag.FileName == string.Empty) return;
 
                 string newFileName = saveDiag.FileName;
-
-                //tring prompt = "What do you want to name the merged PDF file? \r\nThe merged PDF file will be saved in: \r\n" + targetDir;
-
-                //string newFileName = VB.Interaction.InputBox(prompt, "PDF File Name", "Merged PDF " + DateTime.Now.Month + "-" + DateTime.Now.Day + "-" + DateTime.Now.Year + " " + DateTime.Now.Hour + ";" + DateTime.Now.Minute + ".pdf");
 
 
                 if (!string.IsNullOrEmpty(newFileName))

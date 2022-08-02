@@ -60,8 +60,7 @@
     <SignManifests>true</SignManifests>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>
-    </ApplicationIcon>
+    <ApplicationIcon>pdf-merge-icon.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
     <ManifestCertificateThumbprint>0B70DC071A6A2114AF0354B6023D686824F5D9DC</ManifestCertificateThumbprint>
@@ -172,6 +171,7 @@
     <Content Include="html\welcome.htm">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="pdf-merge-icon.ico" />
   </ItemGroup>
   <ItemGroup>
     <PublishFile Include="CefSharp.Core.Runtime.dll">

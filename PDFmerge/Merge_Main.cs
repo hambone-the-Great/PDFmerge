@@ -43,18 +43,8 @@ namespace PDFmerge
         
         private void Main_Load(object sender, EventArgs e)
         {
-            //await InitializeAsync();
-
-
-
-            //StreamReader reader = new StreamReader(File.OpenRead(welcomeHtmlPath));
-
-            //webview.NavigateToString(reader.ReadToEnd());
-
-            //chrome.LoadUrl(WelcomeHtmlPath);
+            
             webview.Source = new Uri(WelcomeHtmlPath); 
-
-            //reader.Close();
 
         }
 
@@ -71,17 +61,27 @@ namespace PDFmerge
 
         private void LoadFiles(string[] files)
         {
+            List<PDF> pdfs = new List<PDF>();
+
             foreach (string file in files)
             {
-                NameValueCollection nvp = new NameValueCollection(); 
+                
                 FileInfo info = new FileInfo(file);
                
                 if (info.Extension == ".pdf")
                 {
-                    nvp.Add(info.Name, info.FullName); 
-                    listBox1.Items.Add(nvp);
+                    PDF pdf = new PDF();
+                    pdf.Name = info.Name;
+                    pdf.FullPath = info.FullName;
+                    pdfs.Add(pdf); 
                 }
+                
             }
+
+            listBox1.ValueMember = "FullPath";
+            listBox1.DisplayMember = "Name";
+            listBox1.DataSource = pdfs;
+            
         }
 
         private void btnUp_Click(object sender, EventArgs e)
@@ -100,7 +100,7 @@ namespace PDFmerge
             if (listBox1.Items.Count > 1)
             {
 
-                string[] files = listBox1.Items.Cast<string>().ToArray(); 
+                List<PDF> files = listBox1.Items.Cast<PDF>().ToList();
 
                 FileInfo info = new FileInfo(listBox1.Items[0].ToString());
 
@@ -128,9 +128,9 @@ namespace PDFmerge
                     CombineMultiplePDFs(files, fullPath);                                      
 
                     if (ShowAfterMerge) Process.Start(@"" + fullPath);
-                    
-                    listBox1.Items.Clear();
-                    //chrome.LoadUrl(WelcomeHtmlPath);
+
+                    listBox1.DataSource = null;
+                    listBox1.Items.Clear();                    
                     webview.Source = new Uri(WelcomeHtmlPath); 
                     this.DialogResult = DialogResult.OK;
 
@@ -172,16 +172,16 @@ namespace PDFmerge
 
 
 
-        public static void CombineMultiplePDFs(string[] fileNames, string outFile)
+        public static void CombineMultiplePDFs(List<PDF> fileNames, string outFile)
         {
-            if (fileNames.Length <= 0) return;
+            if (fileNames.Count <= 0) return;
             if (outFile == null) return;
 
             PdfDocument outDoc = new PdfDocument(outFile);
 
-            foreach (string file in fileNames)
+            foreach (PDF file in fileNames)
             {
-                PdfDocument doc = PdfReader.Open(file, PdfDocumentOpenMode.Import); 
+                PdfDocument doc = PdfReader.Open(file.FullPath, PdfDocumentOpenMode.Import); 
 
                 for (int i = 0; i < doc.Pages.Count; i++)
                 {
@@ -236,7 +236,8 @@ namespace PDFmerge
 
             if (listBox1.Items.Count > 0)
             {
-                string path = listBox1.SelectedItem.ToString();
+                PDF pdf = (PDF)listBox1.SelectedItem;
+                string path = pdf.FullPath; 
 
                 btnClear.Enabled = true;
 
@@ -259,28 +260,22 @@ namespace PDFmerge
 
             if (result == DialogResult.OK)
             {
-                string[] files = diag.FileNames; 
-
-                foreach (string file in files)
-                {
-                    listBox1.Items.Add(file); 
-                }
+                string[] files = diag.FileNames;
+                LoadFiles(files); 
             }
 
         }
     }
 
-    //static class WebViewHelper
-    //{
+    public class PDF
+    {
+        public string Name { get; set; } = string.Empty;
+        public string FullPath { get; set; } = string.Empty;         
+        public PDF()
+        {
 
-    //    public static void Navigate(this Microsoft.Web.WebView2.WinForms.WebView2 webview, string path)
-    //    {
-    //        if (webview != null && webview.CoreWebView2 != null)
-    //        {
-    //            webview.CoreWebView2.Navigate(path);
-    //        }
-    //    }
+        }
+    }
 
-    //}
 
 }

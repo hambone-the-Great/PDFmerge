@@ -37,17 +37,18 @@
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.btnClear = new System.Windows.Forms.Button();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.webview = new Microsoft.Web.WebView2.WinForms.WebView2();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.webview = new Microsoft.Web.WebView2.WinForms.WebView2();
             this.tableLayoutPanel1.SuspendLayout();
-            this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.webview)).BeginInit();
+            this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // listBox1
             // 
+            this.listBox1.Cursor = System.Windows.Forms.Cursors.Hand;
             this.listBox1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.listBox1.Font = new System.Drawing.Font("Open Sans", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.listBox1.FormattingEnabled = true;
@@ -150,6 +151,19 @@
             this.tableLayoutPanel1.Size = new System.Drawing.Size(794, 715);
             this.tableLayoutPanel1.TabIndex = 5;
             // 
+            // webview
+            // 
+            this.webview.AllowExternalDrop = true;
+            this.tableLayoutPanel1.SetColumnSpan(this.webview, 2);
+            this.webview.CreationProperties = null;
+            this.webview.DefaultBackgroundColor = System.Drawing.Color.White;
+            this.webview.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.webview.Location = new System.Drawing.Point(3, 287);
+            this.webview.Name = "webview";
+            this.webview.Size = new System.Drawing.Size(788, 425);
+            this.webview.TabIndex = 5;
+            this.webview.ZoomFactor = 1D;
+            // 
             // menuStrip1
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -175,19 +189,6 @@
             this.openToolStripMenuItem.Text = "Open";
             this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
             // 
-            // webview
-            // 
-            this.webview.AllowExternalDrop = true;
-            this.tableLayoutPanel1.SetColumnSpan(this.webview, 2);
-            this.webview.CreationProperties = null;
-            this.webview.DefaultBackgroundColor = System.Drawing.Color.White;
-            this.webview.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.webview.Location = new System.Drawing.Point(3, 287);
-            this.webview.Name = "webview";
-            this.webview.Size = new System.Drawing.Size(788, 425);
-            this.webview.TabIndex = 5;
-            this.webview.ZoomFactor = 1D;
-            // 
             // Merge_Main
             // 
             this.AcceptButton = this.btnMerge;
@@ -204,9 +205,9 @@
             this.Text = "PDF Merge";
             this.Load += new System.EventHandler(this.Main_Load);
             this.tableLayoutPanel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.webview)).EndInit();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.webview)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

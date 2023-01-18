@@ -61,26 +61,33 @@ namespace PDFmerge
 
         private void LoadFiles(string[] files)
         {
-            List<PDF> pdfs = new List<PDF>();
+            listBox1.Items.Clear();
 
             foreach (string file in files)
             {
-                
-                FileInfo info = new FileInfo(file);
-               
-                if (info.Extension == ".pdf")
-                {
-                    PDF pdf = new PDF();
-                    pdf.Name = info.Name;
-                    pdf.FullPath = info.FullName;
-                    pdfs.Add(pdf); 
-                }
-                
+                listBox1.Items.Add(file);
             }
 
-            listBox1.ValueMember = "FullPath";
-            listBox1.DisplayMember = "Name";
-            listBox1.DataSource = pdfs;
+            //List<PDF> pdfs = new List<PDF>();
+
+            //foreach (string file in files)
+            //{
+                
+            //    FileInfo info = new FileInfo(file);
+               
+            //    if (info.Extension == ".pdf")
+            //    {
+            //        PDF pdf = new PDF();
+            //        pdf.Name = info.Name;
+            //        pdf.FullPath = info.FullName;
+            //        pdfs.Add(pdf); 
+            //    }
+                
+            //}
+
+            //listBox1.ValueMember = "FullPath";
+            //listBox1.DisplayMember = "Name";
+            //listBox1.DataSource = pdfs;
             
         }
 
@@ -100,7 +107,8 @@ namespace PDFmerge
             if (listBox1.Items.Count > 1)
             {
 
-                List<PDF> files = listBox1.Items.Cast<PDF>().ToList();
+                //List<PDF> files = listBox1.Items.Cast<PDF>().ToList();
+                string[] files = listBox1.Items.Cast<string>().ToArray(); 
 
                 FileInfo info = new FileInfo(listBox1.Items[0].ToString());
 
@@ -172,16 +180,16 @@ namespace PDFmerge
 
 
 
-        public static void CombineMultiplePDFs(List<PDF> fileNames, string outFile)
+        public static void CombineMultiplePDFs(string[] files, string outFile)
         {
-            if (fileNames.Count <= 0) return;
+            if (files.Length <= 0) return;
             if (outFile == null) return;
 
             PdfDocument outDoc = new PdfDocument(outFile);
 
-            foreach (PDF file in fileNames)
+            foreach (string file in files)
             {
-                PdfDocument doc = PdfReader.Open(file.FullPath, PdfDocumentOpenMode.Import); 
+                PdfDocument doc = PdfReader.Open(file, PdfDocumentOpenMode.Import); 
 
                 for (int i = 0; i < doc.Pages.Count; i++)
                 {
@@ -236,8 +244,8 @@ namespace PDFmerge
 
             if (listBox1.Items.Count > 0)
             {
-                PDF pdf = (PDF)listBox1.SelectedItem;
-                string path = pdf.FullPath; 
+
+                string path = listBox1.SelectedItem.ToString();
 
                 btnClear.Enabled = true;
 

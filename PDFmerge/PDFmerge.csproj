@@ -63,10 +63,11 @@
     <ApplicationIcon>pdf-merge-icon.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>3CC3FEFC07635475842C01FCD8FCD4C486135037</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>2B59A7A36ECCEEB373E7926345977A4A16EBABD5</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestKeyFile>PDFmerge_1_TemporaryKey.pfx</ManifestKeyFile>
+    <ManifestKeyFile>
+    </ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
     <GenerateManifests>true</GenerateManifests>

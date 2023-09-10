@@ -14,7 +14,7 @@ using PdfSharp.Pdf;
 using PdfSharp.Pdf.IO;
 using VB = Microsoft.VisualBasic;
 using System.Diagnostics;
-
+using Microsoft.Web.WebView2.Core;
 
 namespace PDFmerge
 {

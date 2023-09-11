@@ -62,7 +62,7 @@ namespace PDFmerge
 
         private void LoadFiles(string[] files)
         {
-            listBox1.Items.Clear();
+            //listBox1.Items.Clear();
 
             foreach (string file in files)
             {

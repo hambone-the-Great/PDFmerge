@@ -23,11 +23,12 @@ namespace PDFmerge
 
         public bool ShowAfterMerge { get; set; } = true;
 
-        private readonly string WelcomeHtmlPath = Path.Combine(MergeSettings.INSTALL_DIR, @"html\welcome.htm");
+        private readonly string WelcomeHtmlPath = Path.Combine(MergeSettings.INSTALL_DIR, @"html\merge-welcome.htm");
 
         public Merge_Main(string[] files = null)
         {
             InitializeComponent();
+
             this.AllowDrop = true;
             this.DragEnter += new DragEventHandler(MainForm_DragEnter);
             this.DragDrop += new DragEventHandler(MainForm_DragDrop);
@@ -36,7 +37,7 @@ namespace PDFmerge
             {
                 LoadFiles(files);
             }
-            
+
 
         }
 

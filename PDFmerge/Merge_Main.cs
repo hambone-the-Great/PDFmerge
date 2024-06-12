@@ -192,14 +192,17 @@ namespace PDFmerge
 
                 foreach (string file in files)
                 {
+                    //FileInfo fileInfo = new FileInfo(file);
+                    //string newFile = Path.Combine(Path.GetTempPath(), fileInfo.Name); 
+
                     PdfDocument doc = PdfReader.Open(file, PdfDocumentOpenMode.Import);
 
                     for (int i = 0; i < doc.Pages.Count; i++)
                     {
-                        outDoc.AddPage(doc.Pages[i]);
-                        doc.Close();
+                        outDoc.AddPage(doc.Pages[i]);                        
                     }
-
+                    
+                    //doc.Close();
                 }
 
                 outDoc.Close();
@@ -207,8 +210,11 @@ namespace PDFmerge
                 Application.DoEvents();
             }
             catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
+            {                
+                FileInfo info = new FileInfo(outFile);
+                if (info.Length <= 0) File.Delete(outFile);
+                
+                MessageBox.Show(ex.Message); 
             }
         }
 

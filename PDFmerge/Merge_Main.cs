@@ -183,26 +183,31 @@ namespace PDFmerge
 
         public static void CombineMultiplePDFs(string[] files, string outFile)
         {
-            if (files.Length <= 0) return;
-            if (outFile == null) return;
-
-            PdfDocument outDoc = new PdfDocument(outFile);
-
-            foreach (string file in files)
+            try
             {
-                PdfDocument doc = PdfReader.Open(file, PdfDocumentOpenMode.Import); 
+                if (files.Length <= 0) return;
+                if (outFile == null) return;
 
-                for (int i = 0; i < doc.Pages.Count; i++)
+                PdfDocument outDoc = new PdfDocument(outFile);
+
+                foreach (string file in files)
                 {
-                    outDoc.AddPage(doc.Pages[i]);
-                    doc.Close(); 
+                    PdfDocument doc = PdfReader.Open(file, PdfDocumentOpenMode.Import);
+
+                    for (int i = 0; i < doc.Pages.Count; i++)
+                    {
+                        outDoc.AddPage(doc.Pages[i]);                        
+                        //doc.Close();
+                    }
+                    //doc.Close(); 
                 }
-
+                
+                outDoc.Close();                
             }
-
-            outDoc.Close();
-            
-            Application.DoEvents();
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message); 
+            }
         }
 
         private void btnClear_Click(object sender, EventArgs e)

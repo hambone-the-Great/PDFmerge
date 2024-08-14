@@ -194,20 +194,17 @@ namespace PDFmerge
                 {
                     PdfDocument doc = PdfReader.Open(file, PdfDocumentOpenMode.Import);
 
-                    for (int i = 0; i < doc.Pages.Count; i++)
-                    {
-                        outDoc.AddPage(doc.Pages[i]);                        
-                        //doc.Close();
-                    }
-                    //doc.Close(); 
+                for (int i = 0; i < doc.Pages.Count; i++)
+                {
+                    outDoc.AddPage(doc.Pages[i]);
+                    doc.Close(); 
                 }
-                
-                outDoc.Close();                
+
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message); 
-            }
+
+            outDoc.Close();
+            
+            Application.DoEvents();
         }
 
         private void btnClear_Click(object sender, EventArgs e)
